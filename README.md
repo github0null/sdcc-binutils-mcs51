@@ -29,7 +29,11 @@
 
 执行 `apt install build-essential` 安装 gcc
 
-clone 本仓库以及子仓库，cd 到 `build` 目录，执行 `./do_all` 即可从源码构建
+clone 本仓库
+
+初始化子仓库 `git submodule init` `git submodule update`
+
+cd 到 `build` 目录，执行 `./do_all` 即可从源码构建
 
 编译完成后生成产物位于 `build/_install`
 
