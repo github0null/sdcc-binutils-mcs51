@@ -1,0 +1,45 @@
+#!/bin/bash
+
+APP_NAME=sdcc-4.5.0-with-binutils
+
+if [ "$1" == "github" ]; then
+	echo "------------------------------------"
+	echo "- publish to github"
+	echo "------------------------------------"
+	VERSION="0.1.1"
+	gh release create v${VERSION} -t "sdcc-with-binutils v${VERSION}" \
+		./build/${APP_NAME}-linux.tar.gz \
+		./build-win32/${APP_NAME}-win32.zip
+	exit $?
+fi
+
+rm -f ./build/*.gz ./build/*.zip
+
+echo "------------------------------------"
+echo "- for win32"
+echo "------------------------------------"
+# copy dlls for win32
+cp `x86_64-w64-mingw32-gcc --print-file-name=libstdc++-6.dll` ./build-win32/_install/bin/
+cp `x86_64-w64-mingw32-gcc --print-file-name=libgcc_s_seh-1.dll` ./build-win32/_install/bin/
+cp `x86_64-w64-mingw32-gcc --print-file-name=libwinpthread-1.dll` ./build-win32/_install/bin/
+
+# copy sdcc device lib for win32
+cp -rf ./build/_install/share/sdcc/lib ./build-win32/_install/share/sdcc
+# package win32 dist
+cd ./build-win32
+ln -s $(realpath ./_install) ./${APP_NAME}
+zip -r ${APP_NAME}-win32.zip ${APP_NAME}
+rm -f ./${APP_NAME}
+cd -
+
+echo "------------------------------------"
+echo "- for linux"
+echo "------------------------------------"
+# package linux dist
+tar -czf ./build/${APP_NAME}-linux.tar.gz \
+    --transform="s/^_install/${APP_NAME}/" \
+    -C ./build _install
+
+echo "----------"
+echo "ALL DONE"
+echo "----------"

@@ -16,5 +16,14 @@
 /build/compile_commands.json
 /build/sdcc
 /build/binutils
-/build/.cache
 /build/_install
+/build/.cache
+/build/*.gz
+# build-win32 dir
+/build-win32/compile_commands.json
+/build-win32/sdcc
+/build-win32/binutils
+/build-win32/_install
+/build-win32/.cache
+/build-win32/libboost
+/build-win32/*.zip

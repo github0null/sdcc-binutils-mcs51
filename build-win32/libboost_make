@@ -1,0 +1,5 @@
+git clone https://github.com/libmingw-w64/libboost-mingw-w64.git ./libboost
+cd libboost
+git checkout boost-1.67.0
+git submodule update --init --recursive
+./build.debian.sh

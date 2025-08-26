@@ -18,12 +18,12 @@
 
 由于链接器的不同，因此某些功能可能与 sdcc 不太一样
 
-  - **不支持 overlay**：所有的局部变量保存到栈，因此必须启用 `--stack-auto --nooverlay` 参数
+  - **不支持 overlay**：所有的局部变量保存到栈，因此必须启用 `--stack-auto --nooverlay` 参数，否则将编译失败
   - **不支持 medium, huge 模型**：目前仅支持 `small` 和 `large` 模型
   - **不支持大于 64K 的地址**：不支持引用大于的 `0xFFFF` 的地址，因此也不支持 SFR32
   - **不支持 xstack**: 栈只能位于 `iram` 中
   - **绝对地址定位**：不能使用 `__at(xxx)` 对 `data idata xdata code` 进行绝对地址定位，**SFR寄存器除外**，因为 ld 使用 linker script 进行地址分配。要使用该功能参考下面的 **使用方法** 小节，或者使用 `-Wl,--defsym=` 直接定义符号绝对位置
-  - **更容易栈溢出**：由于不支持 overlay 功能，因此所有的局部变量和函数参数存储于栈中，这对于 mcs51 是一个挑战，因为即使使用 large 模型，stack 最大剩余大小为 `256 - 32 = 224 bytes`，因此不要使用太多的函数参数和嵌套调用，这会加速栈的溢出。
+  - **栈空间使用**：由于不支持 overlay 功能，因此所有的局部变量和函数参数存储于栈中，这对于 mcs51 是一个挑战，因为即使使用 large 模型，stack 最大剩余大小为 `256 - 32 = 224 bytes`，因此对于函数调用，不要使用太多的函数参数和嵌套调用，这会加速栈的溢出。
 
 # 从源码构建
 
@@ -31,11 +31,24 @@
 
 clone 本仓库
 
-初始化子仓库 `git submodule init` `git submodule update`
+初始化子仓库 `git submodule update --init --recursive`
 
 cd 到 `build` 目录，执行 `./do_all` 即可从源码构建
 
 编译完成后生成产物位于 `build/_install`
+
+## 为 win32 构建
+
+需要预先安装 `x86_64-w64-mingw32-gcc` 以及 `libz-mingw-w64-dev`
+
+在 build-win32 目录下依次执行
+
+```shell
+./binutils_configure
+./binutils_make
+./sdcc_configure
+./sdcc_make
+```
 
 # 使用方法
 
