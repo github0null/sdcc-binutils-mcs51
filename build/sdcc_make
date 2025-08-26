@@ -1,0 +1,16 @@
+#!/bin/bash
+cd sdcc
+
+cp -fv ../_install/bin/i51-elf-as ./bin/i51-elf-as
+cp -fv ../_install/bin/i51-elf-ld ./bin/i51-elf-ld
+cp -fv ../_install/bin/i51-elf-ar ./bin/i51-elf-ar
+cp -fv ../_install/bin/i51-elf-objcopy ./bin/i51-elf-objcopy
+cp -fv ../_install/bin/i51-elf-objdump ./bin/i51-elf-objdump
+
+make -C ./device/lib clean
+
+if [ -f "compile_commands.json" ] && [ $(jq 'length' compile_commands.json) -gt 0 ]; then
+	make -j16 $*
+else
+	bear -- make -j16 $*
+fi

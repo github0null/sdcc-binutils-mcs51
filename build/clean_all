@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -rf _install
+./binutils_clean
+./sdcc_clean

@@ -1,0 +1,20 @@
+/*.xz
+/*.zip
+/*.gz
+/*.bz2
+/NOTE.md
+/.clangd
+/test
+/tmp
+/sdcc_aurix_scr_42
+/build-sdcc
+/.vscode
+/sdcc.init.call.txt
+.cache
+
+# build dir
+/build/compile_commands.json
+/build/sdcc
+/build/binutils
+/build/.cache
+/build/_install

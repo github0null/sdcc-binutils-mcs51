@@ -1,0 +1,6 @@
+[submodule "binutils"]
+	path = binutils
+	url = https://github.com/github0null/binutils-mcs51.git
+[submodule "sdcc"]
+	path = sdcc
+	url = https://github.com/github0null/sdcc-mcs51.git

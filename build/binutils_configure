@@ -1,0 +1,30 @@
+#!/bin/bash
+
+SRC_DIR=$(pwd)/../binutils
+mkdir -p binutils
+cd binutils
+$SRC_DIR/configure --prefix=$(pwd)/../_install \
+    CFLAGS="-O2" \
+    LDFLAGS="-static" \
+    --target=i51-elf \
+    --program-prefix=i51-elf- \
+    --disable-threads \
+    --enable-nls \
+    --disable-itcl \
+    --disable-tk \
+    --disable-tcl \
+    --disable-winsup \
+    --disable-gdbtk \
+    --disable-libgui \
+    --disable-rda \
+    --disable-sid \
+    --disable-sim \
+    --disable-gdb \
+    --disable-newlib \
+    --disable-libgloss \
+    --disable-test-suite \
+    --enable-checking=release \
+    --with-gnu-ld \
+    --with-gnu-as \
+    --with-pkgversion=GPL_BINUTILS238 \
+    --disable-werror

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+./binutils_configure && sync && \
+	./binutils_make && sync && \
+	./binutils_make install
+if [ ! $? -eq 0 ]; then
+	echo "Fail to make binutils."
+	exit 1
+fi
+
+./sdcc_configure && sync && ./sdcc_make install
+
+if [ ! $? -eq 0 ]; then
+	echo "Fail to make sdcc."
+	exit 1
+fi
+
+if [ ! -f "./compile_commands.json" ]; then
+	jq -s 'add' ./binutils/compile_commands.json ./sdcc/compile_commands.json > compile_commands.json
+fi
+
+echo "ALL DONE."

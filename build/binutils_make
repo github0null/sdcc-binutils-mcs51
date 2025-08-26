@@ -1,0 +1,7 @@
+#!/bin/bash
+cd binutils
+if [ -f "compile_commands.json" ] && [ $(jq 'length' compile_commands.json) -gt 0 ]; then
+	make LDFLAGS="-static" -j16 $*
+else
+	bear -- make LDFLAGS="-static" -j16 $*
+fi
