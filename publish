@@ -2,12 +2,13 @@
 
 APP_NAME=sdcc-4.5.0-with-binutils
 
-if [ "$1" == "github" ]; then
+if [ "$1" == "upload" ]; then
 	echo "------------------------------------"
 	echo "- publish to github"
 	echo "------------------------------------"
-	VERSION="0.1.1"
-	gh release create v${VERSION} -t "sdcc-with-binutils v${VERSION}" \
+	VERSION="0.2.0"
+	node ./latest_changes.js > /tmp/gas-i51-changelog.md
+	gh release create v${VERSION} -t "sdcc-with-binutils v${VERSION}" -F /tmp/gas-i51-changelog.md \
 		./build/${APP_NAME}-linux.tar.gz \
 		./build-win32/${APP_NAME}-win32.zip
 	exit $?

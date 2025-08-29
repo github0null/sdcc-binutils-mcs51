@@ -1,0 +1,15 @@
+#!/bin/bash
+
+rm -rf ./_install
+./binutils_make distclean
+./sdcc_make distclean
+
+./binutils_configure
+./sdcc_configure
+sync
+
+./binutils_make
+sync
+./binutils_make install
+sync
+./sdcc_make install
