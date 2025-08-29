@@ -6,10 +6,11 @@ All notable version changes will be recorded in this file.
 
 ***
 
-### [v0.2.0] update
+### [v0.2.1] update
 
- - New builtin function `__delay_cycles(unsigned int)`
- - Fix linker warning: "allocated section `.data' not in segment"
+ - New builtin function `__delay_cycles(unsigned int)`.
+ - Fix linker warning: "allocated section `.data' not in segment".
+ - Add subversion in sdcc banner.
 
 ***
 

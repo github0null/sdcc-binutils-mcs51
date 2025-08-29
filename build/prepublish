@@ -9,7 +9,21 @@ rm -rf ./_install
 sync
 
 ./binutils_make
+if [ ! $? -eq 0 ]; then
+	echo "Failed on ./binutils_make"
+	exit 1
+fi
+
 sync
 ./binutils_make install
+if [ ! $? -eq 0 ]; then
+	echo "Failed on ./binutils_make install"
+	exit 1
+fi
+
 sync
 ./sdcc_make install
+if [ ! $? -eq 0 ]; then
+	echo "Failed on ./sdcc_make install"
+	exit 1
+fi

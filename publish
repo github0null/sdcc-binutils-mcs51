@@ -1,14 +1,15 @@
 #!/bin/bash
 
 APP_NAME=sdcc-4.5.0-with-binutils
+APP_VERSION="0.2.1"
+export SDCC_SUB_VERSION=$APP_VERSION
 
 if [ "$1" == "upload" ]; then
 	echo "------------------------------------"
-	echo "- publish to github"
+	echo "- publish $APP_VERSION to github"
 	echo "------------------------------------"
-	VERSION="0.2.0"
 	node ./latest_changes.js > /tmp/gas-i51-changelog.md
-	gh release create v${VERSION} -t "sdcc-with-binutils v${VERSION}" -F /tmp/gas-i51-changelog.md \
+	gh release create v${APP_VERSION} -t "sdcc-with-binutils v${APP_VERSION}" -F /tmp/gas-i51-changelog.md \
 		./build/${APP_NAME}-linux.tar.gz \
 		./build-win32/${APP_NAME}-win32.zip
 	exit $?
@@ -19,6 +20,14 @@ rm -f ./build/*.gz ./build/*.zip
 echo "------------------------------------"
 echo "- for win32"
 echo "------------------------------------"
+cd ./build-win32
+./prepublish
+if [ ! $? -eq 0 ]; then
+	echo "Fail to build for win32."
+	exit 1
+fi
+sync
+cd -
 # copy dlls for win32
 cp `x86_64-w64-mingw32-gcc --print-file-name=libstdc++-6.dll` ./build-win32/_install/bin/
 cp `x86_64-w64-mingw32-gcc --print-file-name=libgcc_s_seh-1.dll` ./build-win32/_install/bin/
@@ -36,6 +45,14 @@ cd -
 echo "------------------------------------"
 echo "- for linux"
 echo "------------------------------------"
+cd ./build
+./prepublish
+if [ ! $? -eq 0 ]; then
+	echo "Fail to build for linux."
+	exit 1
+fi
+sync
+cd -
 # package linux dist
 tar -czf ./build/${APP_NAME}-linux.tar.gz \
     --transform="s/^_install/${APP_NAME}/" \
@@ -43,4 +60,5 @@ tar -czf ./build/${APP_NAME}-linux.tar.gz \
 
 echo "----------"
 echo "ALL DONE"
+echo "  Now you can run '$0 upload' to publish github release."
 echo "----------"
