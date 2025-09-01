@@ -6,6 +6,12 @@ All notable version changes will be recorded in this file.
 
 ***
 
+### [v0.2.3] update
+
+ - Add "-g --gdwarf-2" options for i51-elf-as.
+
+***
+
 ### [v0.2.2] update
 
  - Change: call `___sdcc_external_startup` before init global data
